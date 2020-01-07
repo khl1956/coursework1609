@@ -1,0 +1,36 @@
+
+
+{% extends "index.html" %}
+
+{% block content %}
+    <br />
+<h1><font face = "Comic sans MS">Dashboard for user
+<font color="magenta">{{username}}</font>
+     </font></h1>
+    <br />
+<br />
+    <form class="form"  action = "/{{action}}" method = post >
+        {{ form.hidden_tag() }}
+        {{ form.username.label }}
+        {{ form.username(class_="form-control") }}
+        {{ form.submit(class_="btn btn-success") }}
+    </form>
+<br />
+    {% for id in ids %}
+        <h3>{{names[id]}}</h3>
+        <div id={{id}}></div>
+    {% endfor %}
+
+    <script src="{{ url_for('static', filename='js/d3.v5.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
+
+    <script type="text/javascript">
+        var graphs = {{graphJSON | safe}};
+        var ids = {{ids | safe}};
+        for(var i in graphs) {
+            Plotly.plot(ids[i].toString(), // the ID of the div, created above
+                        [graphs[i]],{});
+        }
+    </script>
+
+{% endblock %}
