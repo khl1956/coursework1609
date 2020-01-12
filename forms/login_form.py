@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, PasswordField, DateField, HiddenFi
 from wtforms import validators
 
 
-class UsersForm(Form):
+class LoginForm(Form):
     username = StringField("Username: ", [
         validators.DataRequired("Enter username."),
         validators.Length(min=6, message="Username should be more than 5 symbols")
@@ -13,9 +13,4 @@ class UsersForm(Form):
         validators.DataRequired("Enter a password.")
     ])
 
-    email = StringField("E-mail: ", [
-        validators.DataRequired("Enter e-mail"),
-        validators.Email("Enter valid e-mail")
-    ])
-
-    submit = SubmitField("Save")
+    submit = SubmitField("Login")
