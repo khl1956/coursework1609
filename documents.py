@@ -11,18 +11,29 @@ from dao.db import *
 from dao.orm.model import *
 from forms.documents_form import *
 
+from login import *
+
 
 @app.route('/documents', methods=['GET'])
 def documents():
     db = PostgresDb()
 
-    result = db.sqlalchemy_session.query(Documents).all()
+    loggedInUser = getLoggedUser(getUserSessionId(request))
+    if loggedInUser == None:
+        return redirect('/')
+
+    result = db.sqlalchemy_session.query(Documents).filter(Documents.user_id == loggedInUser.user_id).all()
     return render_template('documents.html', documents=result)
 
 
 @app.route('/new_document', methods=['GET', 'POST'])
 def new_document():
+    loggedInUser = getLoggedUser(getUserSessionId(request))
+    if loggedInUser == None:
+        return redirect('/')
+
     form = DocumentsForm()
+
     if request.method == 'POST':
         if not form.validate():
             return render_template('documents_form.html', form=form, form_name="New document", action="new_document",
@@ -74,7 +85,8 @@ def edit_document():
         else:
             db = PostgresDb()
 
-            document = db.sqlalchemy_session.query(Documents).filter(Documents.document_id == request.args.get('document_id')).one()
+            document = db.sqlalchemy_session.query(Documents).filter(
+                Documents.document_id == request.args.get('document_id')).one()
 
             name = form.document_name.data
             user_id = form.user_id.data

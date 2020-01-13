@@ -30,7 +30,7 @@ def getLoggedUser(session_id):
     db = PostgresDb()
     response = db.sqlalchemy_session.query(UserSessions).filter(UserSessions.session_id == session_id).all()
 
-    return len(response) == response[0] if len(response) != 0 else None
+    return response[0] if len(response) != 0 else None
 
 
 @app.route('/login', methods=['GET', 'POST'])

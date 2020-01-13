@@ -15,13 +15,13 @@ from dao.credentials import *
 from dao.db import PostgresDb
 from forms.dashboard_form import DashboardForm
 from flask_app import *
-from execute_sql_file import *
 
 Base = declarative_base()
 
 app = Flask(__name__)
 
 from login import *
+from documents import *
 
 
 def clearSessions():
@@ -37,7 +37,7 @@ def clearSessions():
 
 db = PostgresDb()
 Base.metadata.create_all(db.sqlalchemy_engine)
-clearSessions()
+#clearSessions()
 
 
 @app.route('/', methods=['GET', 'POST'])
