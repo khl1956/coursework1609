@@ -21,7 +21,7 @@ Base = declarative_base()
 app = Flask(__name__)
 
 from login import *
-from documents import *
+from templates import *
 
 
 def clearSessions():

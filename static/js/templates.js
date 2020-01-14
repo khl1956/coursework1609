@@ -13,13 +13,9 @@ $("button[name='btn_delete_template']").click(function() {
 });
 });
 
-
-$("button[name='btn_edit_template']").click(function() {
-
-    window.location = "edit_template?template_id="+$(this).data('template_id');
-
+$("button[name='btn_generate_template']").click(function() {
+    window.location = "generate_template?template_id="+$(this).data('template_id');
 });
-
 
 $("button[name='btn_new_template']").click(function() {
 

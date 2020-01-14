@@ -35,11 +35,15 @@ def getLoggedUser(session_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    loggedInUser = getLoggedUser(getUserSessionId(request))
+    if loggedInUser != None:
+        return redirect('/')
+
     form = LoginForm()
 
     if request.method == 'POST':
         if not form.validate():
-            return render_template('login_form.html', form=form, form_name="Login", action="login", method='POST')
+            return render_template('login_form.html', isUserLoggedIn=False, form=form, form_name="Login", action="login", method='POST')
         else:
             username = form.username.data
             password_hash = getPasswordHash(form.password.data)
@@ -49,7 +53,7 @@ def login():
             response = db.sqlalchemy_session.query(Users).filter(Users.username == username).filter(Users.password_hash == password_hash).all()
 
             if len(response) != 1:
-                return render_template('login_form.html', form=form, form_name="Login", action="login", method='POST')
+                return render_template('login_form.html', isUserLoggedIn=False, form=form, form_name="Login", action="login", method='POST')
 
             user_id = response[0].user_id
 
@@ -67,11 +71,15 @@ def login():
             response.set_cookie(session_id_key, new_uuid)
             return response
 
-    return render_template('login_form.html', form=form, form_name="Login", action="login", method='POST')
+    return render_template('login_form.html', isUserLoggedIn=False, form=form, form_name="Login", action="login", method='POST')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
+    loggedInUser = getLoggedUser(getUserSessionId(request))
+    if loggedInUser == None:
+        return redirect('/')
+
     session_id = getUserSessionId(request)
     response = make_response(redirect('/'))
     response.set_cookie(session_id_key, '', expires=0)
@@ -89,11 +97,15 @@ def logout():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    loggedInUser = getLoggedUser(getUserSessionId(request))
+    if loggedInUser != None:
+        return redirect('/')
+
     form = RegisterForm()
 
     if request.method == 'POST':
         if not form.validate():
-            return render_template('register_form.html', form=form, form_name="Register", action="register", method='POST')
+            return render_template('register_form.html', isUserLoggedIn=False, form=form, form_name="Register", action="register", method='POST')
         else:
             user = Users(password_hash=getPasswordHash(form.password.data), username=form.username.data, email=form.email.data)
 
@@ -107,7 +119,7 @@ def register():
 
             return redirect('/')
 
-    return render_template('register_form.html', form=form, form_name="Register", action="register", method='POST')
+    return render_template('register_form.html', isUserLoggedIn=False, form=form, form_name="Register", action="register", method='POST')
 
 
 def getPasswordHash(password):

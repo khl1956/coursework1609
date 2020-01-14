@@ -33,8 +33,8 @@ class Templates(Base):
 class Fields(Base):
     __tablename__ = 'fields'
 
-    field_id = Column(Integer, primary_key=True)
-    template_id = Column(Integer, ForeignKey('templates.template_id'), primary_key=False)
+    field_id = Column(Integer, autoincrement=True, primary_key=True)
+    template_id = Column(Integer, ForeignKey('templates.template_id'), primary_key=True)
     field_name = Column(String, nullable=False)
     field_content = Column(String, nullable=False)
 

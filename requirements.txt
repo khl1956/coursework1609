@@ -35,4 +35,3 @@ urllib3==1.22
 Werkzeug
 wordcloud==1.5.0
 gunicorn==19.9.0
-pylatex
