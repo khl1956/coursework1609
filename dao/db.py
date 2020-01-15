@@ -1,12 +1,11 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 import psycopg2
 from dao.credentials import *
 
 
 class PostgresDb(object):
     _instance = None
-
     def __new__(cls):
         if cls._instance is None:
             cls._instance = object.__new__(cls)
@@ -25,7 +24,7 @@ class PostgresDb(object):
                 engine = create_engine(DATABASE_URL)
 
                 Session = sessionmaker(bind=engine)
-                session = Session()
+                session = scoped_session(Session)
 
                 PostgresDb._instance.connection = connection
                 PostgresDb._instance.cursor = cursor

@@ -19,11 +19,13 @@
 
             <form class="form"  action = "/{{action}}" method = post enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
+                {{ form.document_name.label }}
+                {{ form.document_name }}
                 {% for subform in form.fields %}
             <div class="form-group">
                 {{ subform.hidden_tag() }}
 
-                {{ subform.name }}
+                {{ subform.nameData.data }}
                 {{ subform.content(class_="form-control") }}
             </div>
                 {% endfor %}
