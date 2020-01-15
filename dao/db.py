@@ -1,11 +1,13 @@
+import psycopg2
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-import psycopg2
+
 from dao.credentials import *
 
 
 class PostgresDb(object):
     _instance = None
+
     def __new__(cls):
         if cls._instance is None:
             cls._instance = object.__new__(cls)

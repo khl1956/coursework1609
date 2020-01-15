@@ -9,7 +9,8 @@ class FieldForm(Form):
 
 
 class GenerateTemplatesForm(Form):
-    document_name = StringField('Document name', [validators.DataRequired("Enter document name"), validators.Length(min=1, message="Do not enter empty strings")])
+    document_name = StringField('Document name', [validators.DataRequired("Enter document name"),
+                                                  validators.Length(min=1, message="Do not enter empty strings")])
     fields = FieldList(FormField(FieldForm), min_entries=0)
 
     submit = SubmitField("Generate")

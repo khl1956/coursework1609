@@ -1,22 +1,11 @@
 import datetime
-import hashlib
 import os
-import uuid
-
-from flask import *
-from sqlalchemy.exc import DatabaseError
-from werkzeug.utils import secure_filename
 
 from documents import generateDocumentFromCurrentFieldState
-from flask_app import *
-
-from dao.db import *
-from dao.orm.model import *
-from forms.add_templates_form import *
-from forms.generate_templates_form import GenerateTemplatesForm, FieldForm
-
-from login import *
 from fields import *
+from forms.add_templates_form import *
+from forms.generate_templates_form import GenerateTemplatesForm
+from login import *
 
 
 @app.route('/templates', methods=['GET'])
@@ -96,7 +85,9 @@ def generate_template():
     if request.method == 'POST':
         if not form.validate_on_submit():
             return render_template('generate_templates_form.html', isUserLoggedIn=True, form=form,
-                                   form_name="Edit template", action="generate_template?template_id=" + request.args.get('template_id'), method='POST')
+                                   form_name="Edit template",
+                                   action="generate_template?template_id=" + request.args.get('template_id'),
+                                   method='POST')
         else:
             updateFields(form.fields.data, template_id)
 
@@ -135,7 +126,8 @@ def updateFields(data, template_id):
     for fieldData in data:
         id = fieldData['id']
 
-        dbField = db.sqlalchemy_session.query(Fields).filter(Fields.field_id == id).filter(Fields.template_id == template_id).one()
+        dbField = db.sqlalchemy_session.query(Fields).filter(Fields.field_id == id).filter(
+            Fields.template_id == template_id).one()
 
         dbField.field_content = fieldData['content']
 

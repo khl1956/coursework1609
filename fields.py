@@ -1,7 +1,9 @@
 import re
+
+from sqlalchemy.exc import DatabaseError
+
 from dao.db import *
 from dao.orm.model import *
-from sqlalchemy.exc import DatabaseError
 
 customAttribute = r'\\template{%s}'
 
@@ -33,9 +35,10 @@ def getFilledTemplateText(template):
         text = file.read()
 
     for field in getTemplateFields(template.template_id):
-        text = re.sub(customAttribute % field.field_name, field.field_content, text, flags = re.M)
+        text = re.sub(customAttribute % field.field_name, field.field_content, text, flags=re.M)
 
     return text
+
 
 def getTemplateFields(template_id):
     db = PostgresDb()

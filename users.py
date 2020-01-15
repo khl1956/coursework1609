@@ -1,13 +1,12 @@
 import hashlib
 
 from flask import *
+from forms.users_form import *
 from sqlalchemy.exc import DatabaseError
-
-from flask_app import *
 
 from dao.db import *
 from dao.orm.model import *
-from forms.users_form import *
+from flask_app import *
 
 
 @app.route('/users', methods=['GET'])

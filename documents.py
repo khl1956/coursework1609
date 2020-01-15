@@ -1,24 +1,11 @@
 import datetime
-import hashlib
+import os
 import shutil
 import subprocess
-import os
-import uuid
 from shutil import copyfile
 
-from flask import *
-from sqlalchemy.exc import DatabaseError
-from werkzeug.utils import secure_filename
-
-from flask_app import *
-
-from dao.db import *
-from dao.orm.model import *
-from forms.add_templates_form import *
-from forms.generate_templates_form import GenerateTemplatesForm, FieldForm
-
-from login import *
 from fields import *
+from login import *
 
 
 def generateDocumentFromCurrentFieldState(template_id, document_name):
@@ -43,7 +30,8 @@ def generateDocumentFromCurrentFieldState(template_id, document_name):
         file.write(template_text)
 
     try:
-        subprocess.check_call(['pdflatex', '-recorder', '-output-directory=' + os.path.abspath(temp_folder_name), os.path.abspath(temp_template_path)], timeout=10)
+        subprocess.check_call(['pdflatex', '-recorder', '-output-directory=' + os.path.abspath(temp_folder_name),
+                               os.path.abspath(temp_template_path)], timeout=10)
         copyfile(temp_document_path, path)
     except Exception as e:
         print(e)
