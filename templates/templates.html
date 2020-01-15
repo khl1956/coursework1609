@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for template in templates %}
+            <tr >
+                <td>{{template.template_name}}</td>
+                <td>{{template.template_upload_date}}</td>
+                <td>
+                    <button type="button" class="btn btn-success" name="btn_generate_template" data-template_id="{{template.template_id}}">Generate</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" name="btn_delete_template" data-template_id="{{template.template_id}}">Delete</button>
+                </td>
+            </tr>
+        {% endfor %}
+            <tr>
+                <td> <button type="button" class="btn btn-success" name="btn_new_template">Add template</button> </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    <script src="{{ url_for('static', filename='js/templates.js') }}"></script>
+
+{% endblock %}

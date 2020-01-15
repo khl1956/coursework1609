@@ -1,0 +1,5 @@
+host = 'ec2-184-73-192-172.compute-1.amazonaws.com'
+database = 'd28c3hd6bvc8pq'
+username = 'hdwlpjfbekojqy'
+password = 'b68aca4c48b4156e1280bb6e3ecbf99845c4fd7e127c64f5d81c3f4825597b1a'
+DATABASE_URL = 'postgres://hdwlpjfbekojqy:b68aca4c48b4156e1280bb6e3ecbf99845c4fd7e127c64f5d81c3f4825597b1a@ec2-184-73-192-172.compute-1.amazonaws.com:5432/d28c3hd6bvc8pq'

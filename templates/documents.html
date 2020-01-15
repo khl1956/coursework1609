@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for document in documents %}
+            <tr >
+                <td>{{document.document_name}}</td>
+                <td>{{document.document_upload_date}}</td>
+                <td>
+                    <button type="button" class="btn btn-success" name="btn_download_document" data-document_id="{{document.document_id}}">Download</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" name="btn_delete_document" data-document_id="{{document.document_id}}">Delete</button>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+    <script src="{{ url_for('static', filename='js/documents.js') }}"></script>
+
+{% endblock %}
